@@ -19,5 +19,12 @@
   "bugs": {
     "url": "https://github.com/GochoMugo/docvy-cache/issues"
   },
-  "homepage": "https://github.com/GochoMugo/docvy-cache"
+  "homepage": "https://github.com/GochoMugo/docvy-cache",
+  "dependencies": {
+    "docvy-utils": "GochoMugo/docvy-utils",
+    "node-uuid": "latest"
+  },
+  "devDependencies": {
+    "should": "latest"
+  }
 }
