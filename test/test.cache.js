@@ -16,11 +16,38 @@ var Cache = require("../lib/cache");
 
 // module variables
 var cache;
+var data = require("./data/data.json");
+var dataKeys = [];
 
 
-// a cache to reuse for (simple) tests not using memory for items
+// filling cache with canned data
+function fillCache(cache) {
+  for (var key in data) {
+    cache.set(key, data[key].content);
+  }
+}
+
+
+// validate cache has the test data
+function testCacheData(cache, done) {
+  var index = 0;
+  function getData() {
+    var key = dataKeys[index++];
+    if (! key) { return done(); }
+    cache.get(key, function(err, data) {
+      should(err).not.be.ok;
+      should(data).eql(data[key]);
+      return getData();
+    });
+  }
+}
+
+
 before(function() {
-  cache = new Cache();
+  // a cache to reuse for (simple) tests not using memory for items
+  cache = new Cache({ cacheDir: __dirname + "_test_useless" });
+  // data keys
+  for (var key in data) { dataKeys.push(key); }
 });
 
 
@@ -100,36 +127,123 @@ describe("cache.getConfigurations", function() {
 
 
 describe("cache.restore", function() {
+  var cache;
+  var pathToCacheDir = __dirname + "/_test_restore1";
 
-  it("restores from a directory of cache files");
+  before(function(done) {
+    cache = new Cache({
+      cacheDir: pathToCacheDir
+    });
+    fillCache(cache);
+    cache.save(function(err) {
+      should(err).not.be.ok;
+      done();
+    });
+  });
+
+  it("restores from a directory of cache files", function(done) {
+    var my_cache = new Cache({ cacheDir: pathToCacheDir });
+    my_cache.restore(function(err) {
+      should(err).not.be.ok;
+      testCacheData(my_cache, done);
+    });
+  });
+
+  it("passes No error if directory does not exist", function(done) {
+    var my_cache = new Cache({
+      cacheDir: __dirname + "/non-existing-dir"
+    });
+    cache.restore(function(err) {
+      should(err).not.be.ok;
+      done();
+    });
+  });
 
 });
 
 
 describe("cache.save", function() {
+  var cache;
+  var pathToCacheDir = __dirname + "/_test_save1";
 
-  it("saves cache to directory");
+  before(function() {
+    cache = new Cache({
+      cacheDir: pathToCacheDir
+    });
+    fillCache(cache);
+  });
 
-});
-
-
-describe("cache.get", function() {
-
-  it("retrieves item from its file if not loaded yet");
-
-  it("retrieves item from memory if already loaded");
-
-  it("returns data as a Buffer/String");
+  it("saves cache to directory", function(done) {
+    cache.save(function(err) {
+      should(err).not.be.ok;
+      var my_cache = new Cache({ cacheDir: pathToCacheDir });
+      my_cache.restore(function(err) {
+        should(err).not.be.ok;
+        testCacheData(my_cache, done);
+      });
+    });
+  });
 
 });
 
 
 describe("cache.set", function() {
+  var cache;
 
-  it("sets item into memory for later retrieval");
+  before(function() {
+    cache = new Cache({ cacheDir: __dirname + "_test_useless" });
+  });
 
-  it("allows item as Buffer");
+  it("sets item into memory for later retrieval", function(done) {
+    var someKey = "block-mine";
+    var someData = "some data is useful";
+    cache.set(someKey, someData);
+    cache.get(someKey, function(err, data) {
+      should(err).not.be.ok;
+      should(data).eql(someData);
+      done();
+    });
+  });
 
-  it("allows items as String");
+});
+
+
+describe("cache.get", function() {
+  var cache;
+  var pathToCacheDir = __dirname + "/_test_get1";
+
+  before(function(done) {
+    cache = new Cache({ cacheDir: pathToCacheDir });
+    fillCache(cache);
+    cache.save(function(err) {
+      should(err).not.be.ok;
+      done();
+    });
+    cache = new Cache({ cacheDir: pathToCacheDir });
+  });
+
+  it("retrieves item from its file if not loaded yet", function(done) {
+    testCacheData(cache, done);
+  });
+
+  it.skip("retrieves item from memory if already loaded",
+  function(done) {
+    cache.get("keep-in-memory", function(err, data) {
+      should(err).not.be.ok;
+      cache.get("keep-in-memory", function(err, data) {
+        should(err).not.be.ok;
+        should(data).be.ok;
+        done();
+      }); // inner get
+    }); // outer get
+  });
+
+  it("returns data as a String", function(done) {
+    cache.get("as-string", function(err, data) {
+      should(err).not.be.ok;
+      should(data).be.an.instanceOf(String);
+      done();
+    }); // cache.get
+  });
 
 });
