@@ -21,7 +21,8 @@
   },
   "homepage": "https://github.com/GochoMugo/docvy-cache",
   "dependencies": {
-    "docvy-utils": "GochoMugo/docvy-utils",
+    "docvy-utils": "GochoMugo/docvy-utils#develop",
+    "lodash": "latest",
     "node-uuid": "latest"
   },
   "devDependencies": {
