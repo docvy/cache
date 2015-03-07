@@ -10,6 +10,11 @@ exports = module.exports = function(grunt) {
   "use strict";
 
   grunt.initConfig({
+    clean: {
+      test: {
+        src: ["test/_test*"]
+      }
+    },
     jshint: {
       all: [
         "Gruntfile.js", "lib/**/*.js", "test/**/*.js"
@@ -30,9 +35,10 @@ exports = module.exports = function(grunt) {
     }
   });
 
+  grunt.loadNpmTasks("grunt-contrib-clean");
   grunt.loadNpmTasks("grunt-contrib-jshint");
   grunt.loadNpmTasks("grunt-mocha-test");
 
-  grunt.registerTask("test", ["jshint", "mochaTest"]);
+  grunt.registerTask("test", ["jshint", "clean", "mochaTest", "clean"]);
 
 };
