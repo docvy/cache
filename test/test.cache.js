@@ -7,6 +7,7 @@
 
 
 // npm-installed modules
+var lodash = require("lodash");
 var should = require("should");
 
 
@@ -17,7 +18,7 @@ var Cache = require("../lib/cache");
 // module variables
 var cache;
 var data = require("./data/data.json");
-var dataKeys = [];
+var dataKeys = lodash.keys(data);
 
 
 // filling cache with canned data
@@ -31,12 +32,14 @@ function fillCache(cache) {
 // validate cache has the test data
 function testCacheData(cache, done) {
   var index = 0;
+  getData();
+
   function getData() {
     var key = dataKeys[index++];
     if (! key) { return done(); }
-    cache.get(key, function(err, data) {
+    cache.get(key, function(err, _data) {
       should(err).not.be.ok;
-      should(data).eql(data[key]);
+      should(_data).eql(data[key].content);
       return getData();
     });
   }
@@ -46,8 +49,6 @@ function testCacheData(cache, done) {
 before(function() {
   // a cache to reuse for (simple) tests not using memory for items
   cache = new Cache({ cacheDir: __dirname + "_test_useless" });
-  // data keys
-  for (var key in data) { dataKeys.push(key); }
 });
 
 
@@ -217,9 +218,12 @@ describe("cache.get", function() {
     fillCache(cache);
     cache.save(function(err) {
       should(err).not.be.ok;
-      done();
+      cache = new Cache({ cacheDir: pathToCacheDir });
+      cache.restore(function(err) {
+        should(err).not.be.ok;
+        done();
+      });
     });
-    cache = new Cache({ cacheDir: pathToCacheDir });
   });
 
   it("retrieves item from its file if not loaded yet", function(done) {
