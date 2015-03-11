@@ -1,9 +1,13 @@
-links: node_modules/docvy-utils
+links: node_modules \
+	node_modules/docvy-utils
+
+
+node_modules:
+	mkdir -p node_modules
 
 
 node_modules/docvy-utils:
-	mkdir -p node_modules
-	ln -s "$$(dirname $$PWD)/docvy-utils" $$PWD/$@
+	ln -sf "$$(dirname $$PWD)/docvy-utils" $$PWD/$@
 
 
 clean:

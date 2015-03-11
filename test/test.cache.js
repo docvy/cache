@@ -209,6 +209,24 @@ describe("cache.set", function() {
 });
 
 
+describe("cache.has", function() {
+  var cache = new Cache();
+
+  before(function() {
+    fillCache(cache);
+  });
+
+  it("returns true if key exists", function() {
+    should(cache.has(dataKeys[0])).eql(true);
+  });
+
+  it("returns false if key does NOT exist", function() {
+    should(cache.has("non-existing-key")).eql(false);
+  });
+
+});
+
+
 describe("cache.get", function() {
   var cache;
   var pathToCacheDir = __dirname + "/_test_get1";
