@@ -6,6 +6,10 @@
 */
 
 
+// built-in modules
+var fs = require("fs");
+
+
 // npm-installed modules
 var lodash = require("lodash");
 var should = require("should");
@@ -382,6 +386,62 @@ describe("cache.get", function() {
     cache.get("non-exisiting-key-for-real", function(err, data) {
       should(err).not.be.ok;
       should(data).eql(null);
+      done();
+    });
+  });
+
+});
+
+
+describe("cache.unset", function() {
+
+  it("removes item from memory", function(done) {
+    var myCache = new Cache();
+    var key = "in-memory-now";
+    var value = "some awesome value";
+    // 1st: set the item into cache
+    myCache.set(key, value, function() {
+      should(myCache.has(key)).eql(true);
+      // 2nd: ensure it is in cache
+      myCache.get(key, function(err, data) {
+        should(err).not.be.ok;
+        should(data).eql(value);
+        // 3rd: remove from cache
+        myCache.unset(key, function(err) {
+          should(err).not.be.ok;
+          should(myCache.has(key)).eql(false);
+          done();
+        });
+      });
+    });
+  });
+
+  it("removes its corresponding file", function(done) {
+    var pathToCacheDir = __dirname + "/_test_unset_file";
+    var myCache = new Cache({
+      cacheDir: pathToCacheDir
+    });
+    var key = "got-me-a-key";
+    var value = "i have some value";
+    myCache.set(key, value, function(err) {
+      should(err).not.be.ok;
+      myCache.save(function(err) {
+        should(err).not.be.ok;
+        var files_1 = fs.readdirSync(pathToCacheDir);
+        myCache.unset(key, function(err) {
+          should(err).not.be.ok;
+          var files_2 = fs.readdirSync(pathToCacheDir);
+          should(files_1.length).eql(files_2.length + 1);
+          done();
+        }); // myCache.unset
+      }); // myCache.save
+    });// myCache.set
+  });
+
+  it("ignores if item does not exist yet", function(done) {
+    var myCache = new Cache();
+    myCache.unset("i-dont-exist", function(err) {
+      should(err).not.be.ok;
       done();
     });
   });
