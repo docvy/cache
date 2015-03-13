@@ -13,12 +13,15 @@ var should = require("should");
 
 // own modules
 var Cache = require("../lib/cache");
+var errors = require("../lib/errors");
 
 
 // module variables
 var cache;
 var data = require("./data/data.json");
 var dataKeys = lodash.keys(data);
+var nonStrings = [{}, true, false, null, undefined, [], [1],
+  function() {}];
 
 
 // filling cache with canned data
@@ -143,22 +146,25 @@ describe("cache.restore", function() {
   });
 
   it("restores from a directory of cache files", function(done) {
-    var my_cache = new Cache({ cacheDir: pathToCacheDir });
-    my_cache.restore(function(err) {
+    var myCache = new Cache({ cacheDir: pathToCacheDir });
+    myCache.restore(function(err) {
       should(err).not.be.ok;
-      testCacheData(my_cache, done);
+      testCacheData(myCache, done);
     });
   });
 
-  it("passes No error if directory does not exist", function(done) {
-    var my_cache = new Cache({
+  it("passes RestoreError if directory does not exist",
+  function(done) {
+    var myCache = new Cache({
       cacheDir: __dirname + "/non-existing-dir"
     });
-    cache.restore(function(err) {
-      should(err).not.be.ok;
+    myCache.restore(function(err) {
+      should(err).be.an.instanceOf(errors.RestoreError);
       done();
     });
   });
+
+  it("passes RestoreError if keys file has broken JSON");
 
 });
 
@@ -184,6 +190,8 @@ describe("cache.save", function() {
       });
     });
   });
+
+  it("passes SaveError if could not save");
 
 });
 
@@ -232,6 +240,44 @@ describe("cache.set", function() {
         });
       }, 1000);
     });
+  });
+
+  it("calls callback after key is set", function(done) {
+    cache.set("please-call-my-callback", "some string",
+    function(err) {
+      should(err).not.be.ok;
+      done();
+    });
+  });
+
+  it("passes an InvalidKeyError if key is not a string",
+  function(done) {
+    var setsDone = 0;
+    function amDone() {
+      if (++setsDone === nonStrings.length) { done(); }
+    }
+    function handleRes(err) {
+      should(err).be.an.instanceOf(errors.InvalidKeyError);
+      amDone();
+    }
+    for (var index in nonStrings) {
+      cache.set(nonStrings[index], "some string", handleRes);
+    }
+  });
+
+  it("passes an InvalidValueError if value is not a string",
+  function(done) {
+    var setsDone = 0;
+    function amDone() {
+      if (++setsDone === nonStrings.length) { done(); }
+    }
+    function handleRes(err) {
+      should(err).be.an.instanceOf(errors.InvalidValueError);
+      amDone();
+    }
+    for (var index in nonStrings) {
+      cache.set("my-key-forfuture", nonStrings[index], handleRes);
+    }
   });
 
 });
@@ -315,6 +361,29 @@ describe("cache.get", function() {
         cacheWaited = true;
       });
     }, 1000);
+  });
+
+  it("passes an InvalidKeyError if key is not string",
+  function(done) {
+    var getsDone = 0;
+    function amDone() {
+      if (++getsDone === nonStrings.length) { done(); }
+    }
+    function handleRes(err) {
+      should(err).be.an.instanceOf(errors.InvalidKeyError);
+      amDone();
+    }
+    for (var index in nonStrings) {
+      cache.get(nonStrings[index], handleRes);
+    }
+  });
+
+  it("passes no data if it is a cache MISS", function(done) {
+    cache.get("non-exisiting-key-for-real", function(err, data) {
+      should(err).not.be.ok;
+      should(data).eql(null);
+      done();
+    });
   });
 
 });
