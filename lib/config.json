@@ -1,4 +1,5 @@
 {
   "keyFileName": "keys",
-  "maxAge": 1209600000
+  "maxAge": 1209600000,
+  "waitForRestore": false
 }

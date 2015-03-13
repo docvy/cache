@@ -268,4 +268,25 @@ describe("cache.get", function() {
     }); // cache.get
   });
 
+  it("waits on restoration [slow]", function(done) {
+    this.timeout(5000);
+    var myCache = new Cache({
+      cacheDir: pathToCacheDir,
+      waitForRestore: true
+    });
+    var cacheWaited = false;
+    myCache.get("as-string", function(err, data) {
+      should(err).not.be.ok;
+      should(data).be.an.instanceOf(String);
+      should(cacheWaited).eql(true);
+      done();
+    });
+    setTimeout(function() {
+      myCache.restore(function(err) {
+        should(err).not.be.ok;
+        cacheWaited = true;
+      });
+    }, 1000);
+  });
+
 });
