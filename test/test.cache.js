@@ -192,7 +192,7 @@ describe("cache.set", function() {
   var cache;
 
   before(function() {
-    cache = new Cache({ cacheDir: __dirname + "_test_useless" });
+    cache = new Cache({ cacheDir: __dirname + "/_test_useless" });
   });
 
   it("sets item into memory for later retrieval", function(done) {
@@ -203,6 +203,34 @@ describe("cache.set", function() {
       should(err).not.be.ok;
       should(data).eql(someData);
       done();
+    });
+  });
+
+  it("waits for restoration [slow]", function(done) {
+    this.timeout(5000);
+    var pathToCacheDir = __dirname +
+      "/_test_set_wait_on_restoration";
+    var key = "some-waiting-with-set";
+    var value = "some good old lumber jack";
+    var myCache = new Cache({ cacheDir: pathToCacheDir });
+    fillCache(myCache);
+    myCache.save(function(err) {
+      should(err).not.be.ok;
+      myCache = new Cache({
+        cacheDir: pathToCacheDir,
+        waitForRestore: true
+      });
+      myCache.set(key, value);
+      should(myCache.has(key)).eql(false);
+      setTimeout(function() {
+        myCache.restore(function(err) {
+          should(err).not.be.ok;
+          setTimeout(function() {
+            should(myCache.has(key)).eql(true);
+            done();
+          }, 1000);
+        });
+      }, 1000);
     });
   });
 
@@ -268,7 +296,7 @@ describe("cache.get", function() {
     }); // cache.get
   });
 
-  it("waits on restoration [slow]", function(done) {
+  it("waits for restoration [slow]", function(done) {
     this.timeout(5000);
     var myCache = new Cache({
       cacheDir: pathToCacheDir,
