@@ -123,6 +123,10 @@ Using [npm][npm] from [github][repo] (**bleeding edge**):
 ## todo:
 
 * [ ] test for memory leaks
+* [ ] get estimate size of cache
+* [ ] allow setting ttl (time to live) for items
+* [ ] automated/manual clearing of *expired* items
+* [ ] allow clearing/emptying of cache
 
 
 ## license:
