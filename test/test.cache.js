@@ -473,7 +473,7 @@ describe("cache.destroy", function() {
     });
   });
 
-  it.only("removes entire cacheDir", function(done) {
+  it("removes entire cacheDir", function(done) {
     cache.destroy(function(err) {
       console.log(err);
       should(err).not.be.ok;

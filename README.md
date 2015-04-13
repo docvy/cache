@@ -118,7 +118,7 @@ Removes an item from cache.
 * `done` (Function): function called once query is complete. Other than a possible error is passed to the callback.
 
 
-## cache.destroy([done])
+### cache.destroy([done])
 
 Destroys the entire cache both from in-memory and file-system.
 
