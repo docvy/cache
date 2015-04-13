@@ -157,7 +157,17 @@ describe("cache.restore", function() {
     });
   });
 
-  it("passes RestoreError if keys file has broken JSON");
+  it("passes RestoreError if keys file has broken JSON",
+  function(done) {
+    var pathToCacheDir = __dirname + "/_test_restore_broken_keysfile";
+    fs.mkdirSync(pathToCacheDir);
+    fs.writeFileSync(pathToCacheDir + "/keys", "{ broken: \"json\" }");
+    var myCache = new Cache({ cacheDir: pathToCacheDir });
+    myCache.restore(function(err) {
+      should(err).be.an.instanceOf(errors.RestoreError);
+      done();
+    });
+  });
 
   it("ignores if the keys file is not found", function(done) {
     var pathToCacheDir = __dirname + "/_test_has_no_keysfile";
