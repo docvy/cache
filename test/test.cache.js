@@ -157,18 +157,19 @@ describe("cache.restore", function() {
     });
   });
 
-  it("passes RestoreError if directory does not exist",
-  function(done) {
+  it("passes RestoreError if keys file has broken JSON");
+
+  it("ignores if the keys file is not found", function(done) {
+    var pathToCacheDir = __dirname + "/_test_has_no_keysfile";
+    fs.mkdirSync(pathToCacheDir);
     var myCache = new Cache({
-      cacheDir: __dirname + "/non-existing-dir"
+      cacheDir: pathToCacheDir
     });
     myCache.restore(function(err) {
-      should(err).be.an.instanceOf(errors.RestoreError);
+      should(err).not.be.ok;
       done();
     });
   });
-
-  it("passes RestoreError if keys file has broken JSON");
 
 });
 
