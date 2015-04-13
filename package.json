@@ -23,7 +23,8 @@
   "dependencies": {
     "docvy-utils": "GochoMugo/docvy-utils#develop",
     "lodash": "latest",
-    "node-uuid": "latest"
+    "node-uuid": "latest",
+    "rimraf": "latest"
   },
   "devDependencies": {
     "grunt": "latest",

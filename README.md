@@ -42,7 +42,7 @@ cache.get("appName", function(err, val) {
 
 // removing the item
 cache.unset("appName", function(err) {
-  if (err) { return console.log("could not GET"); }
+  if (err) { return console.log("could not UNSET"); }
   return console.log("UNSET");
 });
 
@@ -51,6 +51,13 @@ cache.unset("appName", function(err) {
 cache.save(function(err) {
   if (err) { return console.log("could not SAVE"); }
   return console.log("SAVED");
+});
+
+
+// we no longer need the cache?
+cache.destroy(function(err) {
+  if (err) { return console.log("could not DESTROY"); }
+  return console.log("DESTROYED");
 });
 ```
 
@@ -111,6 +118,13 @@ Removes an item from cache.
 * `done` (Function): function called once query is complete. Other than a possible error is passed to the callback.
 
 
+## cache.destroy([done])
+
+Destroys the entire cache both from in-memory and file-system.
+
+* `done` (Function): function called once destroying cache is complete. Other than a possible error is passed to callback.
+
+
 ## installation:
 
 Using [npm][npm] from [github][repo] (**bleeding edge**):
@@ -126,7 +140,7 @@ Using [npm][npm] from [github][repo] (**bleeding edge**):
 * [ ] get estimate size of cache
 * [ ] allow setting ttl (time to live) for items
 * [ ] automated/manual clearing of *expired* items
-* [ ] allow clearing/emptying of cache
+* [X] allow clearing/emptying of cache  `cache.destroy`
 
 
 ## license:

@@ -458,3 +458,28 @@ describe("cache.unset", function() {
   });
 
 });
+
+
+describe("cache.destroy", function() {
+  var cache;
+  var pathToCacheDir = __dirname + "/_test_destroy1";
+
+  before(function(done) {
+    cache = new Cache({ cacheDir: pathToCacheDir });
+    fillCache(cache);
+    cache.save(function(err) {
+      should(err).not.be.ok;
+      done();
+    });
+  });
+
+  it.only("removes entire cacheDir", function(done) {
+    cache.destroy(function(err) {
+      console.log(err);
+      should(err).not.be.ok;
+      should(fs.existsSync(pathToCacheDir)).eql(false);
+      done();
+    });
+  });
+
+});
