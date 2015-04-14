@@ -110,12 +110,14 @@ Saves the cache to a directory.
 Other than a possible error is passed to the callback.
 
 
-### cache.set(key, value [, done])
+### cache.set(key, value [, options] [, done])
 
 Sets an Item
 
 * `key` (String): key of the item
 * `value` (String): value of the item
+* `options` (Object):
+  * `maxAge`: a custom `maxAge` for this item. **NOTE:** this value is ignored for items already set into cache. It is only respected if its a new item being set.
 * `done` (Function): function called once query is complete. Other than a possible error is passed to the callback.
 
 
@@ -165,9 +167,9 @@ Using [npm][npm] from [github][repo] (**bleeding edge**):
 
 * [ ] test for memory leaks
 * [ ] get estimate size of cache
-* [ ] allow setting ttl (time to live) for items
+* [X] allow setting ttl (time to live) for items
 * [ ] clearing of *expired* items
-  * [X] manual
+  * [X] manual  `cache.refresh`
   * [ ] automated
 * [X] allow clearing/emptying of cache  `cache.destroy`
 

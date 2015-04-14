@@ -295,6 +295,46 @@ describe("cache.set", function() {
     }
   });
 
+  it("allows setting ttl for new items", function(done) {
+    var key = "awk-hey";
+    var maxAge = 100;
+    cache.set(key, "content", { maxAge: maxAge }, function(err) {
+      should(err).not.be.ok;
+      setTimeout(function() {
+        cache.refresh(function(err) {
+          should(err).not.be.ok;
+          cache.get(key, function(err, val) {
+            should(err).not.be.ok;
+            should(val).not.be.ok;
+            done();
+          }); // cache.get
+        }); // cache.refresh
+      }, maxAge * 3); // setTimeout
+    }); // cache.set
+  });
+
+  it("ignores adding ttl for existing items", function(done) {
+    var key = "awk-key";
+    var content = "some-cotennt";
+    var maxAge = 100;
+    cache.set(key, "random", function(err) {
+      should(err).not.be.ok;
+      cache.set(key, content, { maxAge: maxAge }, function(err) {
+        should(err).not.be.ok;
+        setTimeout(function() {
+          cache.refresh(function(err) {
+            should(err).not.be.ok;
+            cache.get(key, function(err, val) {
+              should(err).not.be.ok;
+              should(val).eql(content);
+              done();
+            }); // cache.get
+          }); // cache.refresh
+        }, maxAge * 3); // setTimeout
+      }); // cache.set
+    }); // cache.set
+  });
+
 });
 
 
@@ -475,7 +515,6 @@ describe("cache.destroy", function() {
 
   it("removes entire cacheDir", function(done) {
     cache.destroy(function(err) {
-      console.log(err);
       should(err).not.be.ok;
       should(fs.existsSync(pathToCacheDir)).eql(false);
       done();
