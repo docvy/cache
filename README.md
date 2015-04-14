@@ -115,14 +115,21 @@ Returns value of item.
 Removes an item from cache.
 
 * `key` (String): key of the item
-* `done` (Function): function called once query is complete. Other than a possible error is passed to the callback.
+* `done` (Function): function called once query is complete. Other than a possible error is passed.
+
+
+### cache.refresh([done])
+
+Refreshes cache by removing expired items. All keys are checked to ensure they have not lived past their expiry time.
+
+* `done` (Function): called once cache refreshing is complete. Other than a possible error is passed.
 
 
 ### cache.destroy([done])
 
 Destroys the entire cache both from in-memory and file-system.
 
-* `done` (Function): function called once destroying cache is complete. Other than a possible error is passed to callback.
+* `done` (Function): function called once destroying cache is complete. Other than a possible error is passed.
 
 
 ## installation:
@@ -139,7 +146,9 @@ Using [npm][npm] from [github][repo] (**bleeding edge**):
 * [ ] test for memory leaks
 * [ ] get estimate size of cache
 * [ ] allow setting ttl (time to live) for items
-* [ ] automated/manual clearing of *expired* items
+* [ ] clearing of *expired* items
+  * [X] manual
+  * [ ] automated
 * [X] allow clearing/emptying of cache  `cache.destroy`
 
 

@@ -483,3 +483,39 @@ describe("cache.destroy", function() {
   });
 
 });
+
+
+describe("cache.refresh", function() {
+  var cache;
+  var pathToCacheDir = __dirname + "/_test_refresh1";
+
+  before(function() {
+    cache = new Cache({
+      cacheDir: pathToCacheDir,
+      maxAge: 100
+    });
+  });
+
+  it("removes expired items", function(done) {
+    var key = "expire";
+    var value = "some content";
+    cache.set(key, value, function(err) {
+      should(err).not.be.ok;
+      cache.get(key, function(err, val) {
+        should(err).not.be.ok;
+        should(val).eql(value);
+        setTimeout(function() {
+          cache.refresh(function(err) {
+            should(err).not.be.ok;
+            cache.get(key, function(err, val) {
+              should(err).not.be.ok;
+              should(val).not.be.ok;
+              done();
+            }); // cache.get
+          }); // cache.refresh
+        }, 200); // setTimeout
+      }); // cache.get
+    }); // cache.set
+  });
+
+});
