@@ -6,7 +6,17 @@
 > The Docvy Cache
 
 
-## programmatic usage:
+## table of contents:
+
+1. [example usage](#example)
+1. [cache API](#api)
+1. [installation](#installation)
+1. [todo](#todo)
+1. [license](#license)
+
+
+<a name="example"></a>
+## example usage:
 
 ```js
 // the module returns a Cache constructor
@@ -24,8 +34,8 @@ var cache = new Cache({
 
 // restore cache
 cache.restore(function(err) {
-  if (err) { return console.log("cache could NOT be restored"); }
-  return console.log("cache restored");
+  if (err) { return console.log("could not RESTORE"); }
+  return console.log("RESTORED");
 });
 
 // setting an item
@@ -54,6 +64,13 @@ cache.save(function(err) {
 });
 
 
+// refreshing cache incase we had old items
+cache.refresh(function(err) {
+  if (err) { return console.log("could not REFRESH"); }
+  return console.log("REFRESHED");
+});
+
+
 // we no longer need the cache?
 cache.destroy(function(err) {
   if (err) { return console.log("could not DESTROY"); }
@@ -62,6 +79,7 @@ cache.destroy(function(err) {
 ```
 
 
+<a name="api"></a>
 ## API
 
 ### Cache([options])
@@ -132,6 +150,7 @@ Destroys the entire cache both from in-memory and file-system.
 * `done` (Function): function called once destroying cache is complete. Other than a possible error is passed.
 
 
+<a name="installation"></a>
 ## installation:
 
 Using [npm][npm] from [github][repo] (**bleeding edge**):
@@ -141,6 +160,7 @@ Using [npm][npm] from [github][repo] (**bleeding edge**):
 ```
 
 
+<a name="todo"></a>
 ## todo:
 
 * [ ] test for memory leaks
@@ -152,6 +172,7 @@ Using [npm][npm] from [github][repo] (**bleeding edge**):
 * [X] allow clearing/emptying of cache  `cache.destroy`
 
 
+<a name="license"></a>
 ## license:
 
 __The MIT License (MIT)__
