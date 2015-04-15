@@ -3,7 +3,7 @@
 
 [![Build Status](https://travis-ci.org/GochoMugo/docvy-cache.svg?branch=develop)](https://travis-ci.org/GochoMugo/docvy-cache) [![Coverage Status](https://coveralls.io/repos/GochoMugo/docvy-cache/badge.svg?branch=develop)](https://coveralls.io/r/GochoMugo/docvy-cache?branch=develop)
 
-> The Docvy Cache
+An in-memory cache capable of being swapped from and into disk. For Node.js applications.
 
 
 ## table of contents:
@@ -28,9 +28,14 @@ var CacheConstructor = Cache.Cache;
 // create a new cache
 var cache = new Cache({
   maxAge: 1209600000, // in milliseconds
-  cacheDir: __dirname + "/cache",
-  waitForRestore: true
+  cacheDir: __dirname + "/cache", // where to swap from/to disk
+  waitForRestore: true // wait for restoration to complete before any query
 });
+
+/**
+* All these operations are asynchronous. You might need to structure
+* your calls to the cache better
+*/
 
 // restore cache
 cache.restore(function(err) {
@@ -56,20 +61,17 @@ cache.unset("appName", function(err) {
   return console.log("UNSET");
 });
 
-
 // saving cache
 cache.save(function(err) {
   if (err) { return console.log("could not SAVE"); }
   return console.log("SAVED");
 });
 
-
 // refreshing cache incase we had old items
 cache.refresh(function(err) {
   if (err) { return console.log("could not REFRESH"); }
   return console.log("REFRESHED");
 });
-
 
 // we no longer need the cache?
 cache.destroy(function(err) {
@@ -88,26 +90,24 @@ This is the constructor for a Cache.
 
 * `options` (Object):
   * `cacheDir` (String): path to a directory where cache items can be saved to
-  * `maxAge` (Number): maximum amount of time to keep an item
+  * `maxAge` (Number): maximum amount of time to keep an item, in milliseconds
   * `waitForRestore` (Boolean): whether to wait for cache to be restored before executing any queries.
 
 
-### cache.restore([callback])
+### cache.restore([done])
 
-Restores the cache from a directory.
+Restores the cache from its directory, as specified in `cacheDir` during instantiation.
 
-* `callback` (Function)
+* `done` (Function): other than a possible error is passed to the callback.
 
-In case you had already saved a cache, you can restore it. Other than a possible error is passed to the callback.
+In case you had already saved a cache, you can restore it.
 
 
-### cache.save([callback])
+### cache.save([done])
 
-Saves the cache to a directory.
+Saves the cache to its directory.
 
-* `callback` (Function)
-
-Other than a possible error is passed to the callback.
+* `done` (Function): other than a possible error is passed to the callback.
 
 
 ### cache.set(key, value [, options] [, done])
@@ -155,7 +155,7 @@ Destroys the entire cache both from in-memory and file-system.
 <a name="installation"></a>
 ## installation:
 
-Using [npm][npm] from [github][repo] (**bleeding edge**):
+(**Bleeding Edge**) Installing from [github][repo] using [npm][npm]:
 
 ```bash
 ⇒ npm install GochoMugo/docvy-cache#develop
@@ -172,6 +172,8 @@ Using [npm][npm] from [github][repo] (**bleeding edge**):
   * [X] manual  `cache.refresh`
   * [ ] automated
 * [X] allow clearing/emptying of cache  `cache.destroy`
+* [ ] use promises
+* [ ] analyse performance against other in-memory Node.js caches
 
 
 <a name="license"></a>
@@ -184,3 +186,4 @@ Copyright (c) 2015 GochoMugo <mugo@forfuture.co.ke>
 
 [npm]:https://npmjs.com
 [repo]:https://github.com/GochoMugo/docvy-cache
+
