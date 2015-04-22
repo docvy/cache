@@ -1,7 +1,7 @@
 
 # docvy-cache
 
-[![Build Status](https://travis-ci.org/GochoMugo/docvy-cache.svg?branch=develop)](https://travis-ci.org/GochoMugo/docvy-cache) [![Coverage Status](https://coveralls.io/repos/GochoMugo/docvy-cache/badge.svg?branch=develop)](https://coveralls.io/r/GochoMugo/docvy-cache?branch=develop)
+[![Build Status](https://travis-ci.org/docvy/cache.svg?branch=develop)](https://travis-ci.org/docvy/cache) [![Coverage Status](https://coveralls.io/repos/docvy/cache/badge.svg?branch=develop)](https://coveralls.io/r/docvy/cache?branch=develop)
 
 An in-memory cache capable of being swapped from and into disk. For Node.js applications.
 
@@ -158,7 +158,7 @@ Destroys the entire cache both from in-memory and file-system.
 (**Bleeding Edge**) Installing from [github][repo] using [npm][npm]:
 
 ```bash
-⇒ npm install GochoMugo/docvy-cache#develop
+⇒ npm install docvy/cache#develop
 ```
 
 
@@ -181,9 +181,10 @@ Destroys the entire cache both from in-memory and file-system.
 
 __The MIT License (MIT)__
 
+Copyright (c) 2015 Forfuture <we@forfuture.co.ke>
 Copyright (c) 2015 GochoMugo <mugo@forfuture.co.ke>
 
 
 [npm]:https://npmjs.com
-[repo]:https://github.com/GochoMugo/docvy-cache
+[repo]:https://github.com/docvy/cache
 

@@ -7,7 +7,7 @@ node_modules:
 
 
 node_modules/docvy-utils:
-	ln -sf "$$(dirname $$PWD)/docvy-utils" $$PWD/$@
+	ln -sf "$$(dirname $$PWD)/utils" $$PWD/$@
 
 
 clean:

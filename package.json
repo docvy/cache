@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/GochoMugo/docvy-cache.git"
+    "url": "https://github.com/docvy/cache.git"
   },
   "keywords": [
     "docvy",
@@ -17,21 +17,23 @@
   "author": "GochoMugo <mugo@forfuture.co.ke>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/GochoMugo/docvy-cache/issues"
+    "url": "https://github.com/docvy/cache/issues"
   },
-  "homepage": "https://github.com/GochoMugo/docvy-cache",
+  "homepage": "https://github.com/docvy/cache",
   "dependencies": {
-    "docvy-utils": "GochoMugo/docvy-utils#develop",
+    "docvy-utils": "docvy/utils#develop",
     "lodash": "latest",
     "node-uuid": "latest",
     "rimraf": "latest"
   },
   "devDependencies": {
+    "benchmark": "latest",
     "grunt": "latest",
     "grunt-contrib-clean": "latest",
     "grunt-contrib-jshint": "latest",
     "grunt-mocha-test": "latest",
     "istanbul": "latest",
+    "memwatch": "latest",
     "should": "latest"
   }
 }
