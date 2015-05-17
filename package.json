@@ -27,10 +27,12 @@
     "rimraf": "latest"
   },
   "devDependencies": {
+    "benchmark": "latest",
     "grunt": "latest",
     "grunt-contrib-clean": "latest",
     "grunt-contrib-jshint": "latest",
     "grunt-mocha-test": "latest",
+    "memwatch": "marcominetti/node-memwatch",
     "istanbul": "latest",
     "should": "latest"
   }
