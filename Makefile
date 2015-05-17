@@ -11,7 +11,7 @@ node_modules/docvy-utils:
 
 
 clean:
-	rm -rf test/_test*
+	rm -rf test/unit/_test*
 
 
 .PHONY: clean

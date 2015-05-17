@@ -16,8 +16,8 @@ var should = require("should");
 
 
 // own modules
-var Cache = require("../lib/cache");
-var errors = require("../lib/errors");
+var Cache = require("../../lib/cache");
+var errors = require("../../lib/errors");
 
 
 // module variables
@@ -90,7 +90,7 @@ describe("cache.Cache", function() {
   it("reads default configurations from config.json", function() {
     var my_cache = new Cache();
     var config = my_cache.getConfigurations();
-    should(config).containEql(require("../lib/config"));
+    should(config).containEql(require("../../lib/config"));
   });
 
 });

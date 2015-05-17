@@ -12,7 +12,7 @@ exports = module.exports = function(grunt) {
   grunt.initConfig({
     clean: {
       test: {
-        src: ["test/_test*"]
+        src: ["test/**/_test*"]
       }
     },
     jshint: {
@@ -30,7 +30,7 @@ exports = module.exports = function(grunt) {
           quiet: false,
           clearRequireCache: false
         },
-        src: ['test/test.*.js']
+        src: ["test/unit/test.*.js"]
       }
     }
   });

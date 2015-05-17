@@ -3,7 +3,7 @@
 
 [![Build Status](https://travis-ci.org/docvy/cache.svg?branch=develop)](https://travis-ci.org/docvy/cache) [![Coverage Status](https://coveralls.io/repos/docvy/cache/badge.svg?branch=develop)](https://coveralls.io/r/docvy/cache?branch=develop)
 
-An in-memory cache capable of being swapped from and into disk. For Node.js applications.
+An in-memory cache capable of being swapped from and to disk. For Node.js applications.
 
 
 ## table of contents:
@@ -181,7 +181,7 @@ Destroys the entire cache both from in-memory and file-system.
 
 __The MIT License (MIT)__
 
-Copyright (c) 2015 Forfuture <we@forfuture.co.ke>
+Copyright (c) 2015 Forfuture <we@forfuture.co.ke> <br/>
 Copyright (c) 2015 GochoMugo <mugo@forfuture.co.ke>
 
 
