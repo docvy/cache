@@ -29,3 +29,5 @@ node_modules
 
 # test-created files
 test/_test*
+test/benchmark/results.csv
+

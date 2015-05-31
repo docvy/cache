@@ -10,6 +10,12 @@ exports = module.exports = function(grunt) {
   "use strict";
 
   grunt.initConfig({
+    benchmark: {
+      all: {
+        src: ["test/benchmark/test.*.js"],
+        dest: "test/benchmark/results.csv"
+      }
+    },
     clean: {
       test: {
         src: ["test/**/_test*"]
@@ -35,10 +41,12 @@ exports = module.exports = function(grunt) {
     }
   });
 
+  grunt.loadNpmTasks("grunt-benchmark");
   grunt.loadNpmTasks("grunt-contrib-clean");
   grunt.loadNpmTasks("grunt-contrib-jshint");
   grunt.loadNpmTasks("grunt-mocha-test");
 
-  grunt.registerTask("test", ["jshint", "clean", "mochaTest", "clean"]);
+  grunt.registerTask("test", ["clean", "jshint", "mochaTest",
+    "benchmark", "clean"]);
 
 };
