@@ -71,6 +71,10 @@ describe("module", function() {
     should(c).be.an.instanceOf(Cache);
     should(c).be.an.instanceOf(Cache.Cache);
   });
+
+  it("exports the errors modules", function() {
+    should.strictEqual(Cache.errors, rooted("lib/errors"));
+  });
 });
 
 
@@ -157,12 +161,11 @@ describe("cache.restore", function() {
     });
   });
 
-  it("passes RestoreError if keys file has broken JSON",
-  function(done) {
-    var cachedirPath = path.join(__dirname, "/_test_restore_broken_keysfile");
+  it("passes RestoreError if keys file has broken JSON", function(done) {
+    var cachedirPath = path.join(__dirname, "_test_restore_broken_keysfile");
     fs.mkdirSync(cachedirPath);
     fs.writeFileSync(cachedirPath + "/keys", "{ broken: \"json\" }");
-    var myCache = new Cache({ cacheDir: pathToCacheDir });
+    var myCache = new Cache({ cacheDir: cachedirPath });
     myCache.restore(function(err) {
       should(err).be.an.instanceOf(errors.RestoreError);
       done();
@@ -170,7 +173,7 @@ describe("cache.restore", function() {
   });
 
   it("ignores if the keys file is not found", function(done) {
-    var cachedirPath = path.join(__dirname, "/_test_has_no_keysfile");
+    var cachedirPath = path.join(__dirname, "_test_has_no_keysfile");
     fs.mkdirSync(cachedirPath);
     var myCache = new Cache({
       cacheDir: cachedirPath,
@@ -185,7 +188,7 @@ describe("cache.restore", function() {
 
 describe("cache.save", function() {
   var cache;
-  var pathToCacheDir = path.join(__dirname, "/_test_save1");
+  var pathToCacheDir = path.join(__dirname, "_test_save1");
 
   before(function() {
     cache = new Cache({
@@ -213,7 +216,7 @@ describe("cache.set", function() {
   var cache;
 
   before(function() {
-    cache = new Cache({ cacheDir: path.join(__dirname, "/_test_set") });
+    cache = new Cache({ cacheDir: path.join(__dirname, "_test_set") });
   });
 
   it("sets item into memory for later retrieval", function(done) {
@@ -229,7 +232,7 @@ describe("cache.set", function() {
 
   it("waits for restoration [slow]", function(done) {
     this.timeout(5000);
-    var cachedirPath = path.join(__dirname, "/_test_set_wait_on_restoration");
+    var cachedirPath = path.join(__dirname, "_test_set_wait_on_restoration");
     var key = "some-waiting-with-set";
     var value = "some good old lumber jack";
     var myCache = new Cache({ cacheDir: cachedirPath });
@@ -262,8 +265,7 @@ describe("cache.set", function() {
     });
   });
 
-  it("passes an InvalidKeyError if key is not a string",
-  function(done) {
+  it("passes an InvalidKeyError if key is not a string", function(done) {
     var setsDone = 0;
     function amDone() {
       if (++setsDone === nonStrings.length) { done(); }
@@ -277,8 +279,7 @@ describe("cache.set", function() {
     }
   });
 
-  it("passes an InvalidValueError if value is not a string",
-  function(done) {
+  it("passes an InvalidValueError if value is not a string", function(done) {
     var setsDone = 0;
     function amDone() {
       if (++setsDone === nonStrings.length) { done(); }
@@ -355,7 +356,7 @@ describe("cache.has", function() {
 
 describe("cache.get", function() {
   var cache;
-  var pathToCacheDir = path.join(__dirname, "/_test_get1");
+  var pathToCacheDir = path.join(__dirname, "_test_get1");
 
   before(function(done) {
     cache = new Cache({ cacheDir: pathToCacheDir });
@@ -414,8 +415,7 @@ describe("cache.get", function() {
     }, 1000);
   });
 
-  it("passes an InvalidKeyError if key is not string",
-  function(done) {
+  it("passes an InvalidKeyError if key is not string", function(done) {
     var getsDone = 0;
     function amDone() {
       if (++getsDone === nonStrings.length) { done(); }
@@ -552,5 +552,4 @@ describe("cache.refresh", function() {
       }); // cache.get
     }); // cache.set
   });
-
 });
