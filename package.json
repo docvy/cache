@@ -4,7 +4,8 @@
   "description": "The Docvy Cache",
   "main": "lib/cache.js",
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt test",
+    "test-coverage": "istanbul cover _mocha --report lcovonly -- -R spec test/test.*.js"
   },
   "repository": {
     "type": "git",
@@ -21,18 +22,26 @@
   },
   "homepage": "https://github.com/docvy/cache",
   "dependencies": {
-    "docvy-utils": "docvy/utils#develop",
-    "lodash": "latest",
-    "node-uuid": "latest",
-    "rimraf": "latest"
+    "docvy-utils": "^0.1.1",
+    "lodash": "^3.10.0",
+    "node-uuid": "^1.4.3",
+    "rimraf": "^2.4.2"
   },
   "devDependencies": {
-    "grunt": "latest",
-    "grunt-contrib-clean": "latest",
-    "grunt-contrib-jshint": "latest",
-    "grunt-mocha-test": "latest",
-    "istanbul": "latest",
-    "memory-cache": "latest",
-    "should": "latest"
+    "coveralls": "^2.11.3",
+    "grunt": "^0.4.5",
+    "grunt-benchmark": "^0.3.0",
+    "grunt-cli": "^0.1.13",
+    "grunt-eslint": "^17.0.0",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-mocha-test": "^0.12.7",
+    "istanbul": "^0.3.17",
+    "load-grunt-tasks": "^3.2.0",
+    "memory-cache": "^0.1.4",
+    "rooted": "^1.0.1",
+    "should": "^7.0.1"
+  },
+  "engines": {
+    "node": ">= 0.10"
   }
 }

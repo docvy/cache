@@ -1,9 +1,9 @@
 /**
-* Benchmarking `get` method
-*
-* The MIT License (MIT)
-* Copyright (c) 2015 GochoMugo <mugo@forfuture.co.ke>
-*/
+ * Benchmarking `get` method
+ *
+ * The MIT License (MIT)
+ * Copyright (c) 2015 GochoMugo <mugo@forfuture.co.ke>
+ */
 
 
 "use strict";
@@ -24,13 +24,12 @@ module.exports = {
       fn: function(deferred) {
         utils.docvyCache.get(utils.key,
           deferred.resolve.bind(deferred));
-      }
+      },
     },
     "nodeCache#get": {
       fn: function() {
         utils.nodeCache.get(utils.key);
-      }
-    }
-  }
+      },
+    },
+  },
 };
-

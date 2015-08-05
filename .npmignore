@@ -1,15 +1,6 @@
-# tests
-test/
-
-# Gruntfile
-Gruntfile.js
-
-# Makefile
-Makefile
-
-# JSHint
-.jshintrc
-
-# CI Config file
+.editorconfig
+.eslintrc
 .travis.yml
-
+Gruntfile.js
+Makefile
+test/

@@ -23,7 +23,7 @@ module.exports = {
       fn: function(deferred) {
         utils.docvyCache.unset(utils.key,
           deferred.resolve.bind(deferred));
-      }
+      },
     },
     "nodeCache#del": {
       onCycle: function() {
@@ -31,8 +31,7 @@ module.exports = {
       },
       fn: function() {
         utils.nodeCache.del(utils.key);
-      }
-    }
-  }
+      },
+    },
+  },
 };
-

@@ -1,52 +1,44 @@
 /**
-* Run script for Grunt, task runner
-*
-* The MIT License (MIT)
-* Copyright (c) 2015 GochoMugo <mugo@forfuture.co.ke>
-*/
+ * Run script for Grunt, task runner
+ *
+ * The MIT License (MIT)
+ * Copyright (c) 2015 GochoMugo <mugo@forfuture.co.ke>
+ */
+
+
+"use strict";
 
 
 exports = module.exports = function(grunt) {
-  "use strict";
+  require("load-grunt-tasks")(grunt);
 
   grunt.initConfig({
     benchmark: {
       all: {
         src: ["test/benchmark/test.*.js"],
-        dest: "test/benchmark/results.csv"
-      }
+        dest: "test/benchmark/results.csv",
+      },
     },
     clean: {
       test: {
-        src: ["test/**/_test*"]
-      }
+        src: ["test/**/_test*"],
+      },
     },
-    jshint: {
-      all: [
-        "Gruntfile.js", "lib/**/*.js", "test/**/*.js"
-      ],
-      options: {
-        jshintrc: true
-      }
+    eslint: {
+      src: ["Gruntfile.js", "index.js", "lib/**/*.js"],
+      test: ["test/**/*.js"],
     },
     mochaTest: {
       test: {
         options: {
-          reporter: 'spec',
+          reporter: "spec",
           quiet: false,
-          clearRequireCache: false
+          clearRequireCache: false,
         },
-        src: ["test/unit/test.*.js"]
-      }
-    }
+        src: ["test/unit/test.*.js"],
+      },
+    },
   });
 
-  grunt.loadNpmTasks("grunt-benchmark");
-  grunt.loadNpmTasks("grunt-contrib-clean");
-  grunt.loadNpmTasks("grunt-contrib-jshint");
-  grunt.loadNpmTasks("grunt-mocha-test");
-
-  grunt.registerTask("test", ["clean", "jshint", "mochaTest",
-    "benchmark", "clean"]);
-
+  grunt.registerTask("test", ["clean", "eslint", "mochaTest", "benchmark", "clean"]);
 };

@@ -20,13 +20,12 @@ module.exports = {
       fn: function(deferred) {
         utils.docvyCache.set(utils.key, utils.value,
           deferred.resolve.bind(deferred));
-      }
+      },
     },
     "nodeCache#put": {
       fn: function() {
         utils.nodeCache.put(utils.key, utils.value);
-      }
-    }
-  }
+      },
+    },
+  },
 };
-
