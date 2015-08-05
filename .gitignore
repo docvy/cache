@@ -28,6 +28,5 @@ node_modules
 .lock-wscript
 
 # test-created files
-test/_test*
+test/**/_test*
 test/benchmark/results.csv
-
