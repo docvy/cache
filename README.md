@@ -1,9 +1,9 @@
 
 # docvy-cache
 
-[![Build Status](https://travis-ci.org/docvy/cache.svg?branch=develop)](https://travis-ci.org/docvy/cache) [![Coverage Status](https://coveralls.io/repos/docvy/cache/badge.svg?branch=develop)](https://coveralls.io/r/docvy/cache?branch=develop)
+> An in-memory cache capable of being swapped from and to disk. For Node.js applications.
 
-An in-memory cache capable of being swapped from and to disk. For Node.js applications.
+[![node](https://img.shields.io/node/v/docvy-cache.svg?style=flat-square)](https://www.npmjs.com/package/docvy-cache) [![npm](https://img.shields.io/npm/v/docvy-cache.svg?style=flat-square)](https://www.npmjs.com/package/docvy-cache) [![Travis](https://img.shields.io/travis/docvy/cache.svg?style=flat-square)](https://travis-ci.org/docvy/cache) [![Gemnasium](https://img.shields.io/gemnasium/docvy/cache.svg?style=flat-square)](https://gemnasium.com/docvy/cache) [![Coveralls](https://img.shields.io/coveralls/docvy/cache.svg?style=flat-square)](https://coveralls.io/github/docvy/cache?branch=master)
 
 
 ## table of contents:
@@ -158,7 +158,7 @@ Destroys the entire cache both from in-memory and file-system.
 (**Bleeding Edge**) Installing from [github][repo] using [npm][npm]:
 
 ```bash
-⇒ npm install docvy/cache#develop
+⇒ npm install docvy-cache
 ```
 
 
@@ -187,4 +187,3 @@ Copyright (c) 2015 GochoMugo <mugo@forfuture.co.ke>
 
 [npm]:https://npmjs.com
 [repo]:https://github.com/docvy/cache
-
